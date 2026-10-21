@@ -1,0 +1,245 @@
+---
+import designSystem from '../../design_system.json';
+---
+
+<!-- Fixed Architectural Datum & Atmospheric Chronograph Island -->
+<header
+  id="island-atmosphere-chronograph"
+  class="fixed top-0 left-0 right-0 z-50 pointer-events-none"
+  aria-label="Architectural Datum and Atmospheric Telemetry"
+>
+  <div class="w-full px-5 md:px-10 py-4 hairline-b bg-canvas-primary/85 backdrop-blur-md pointer-events-auto transition-colors duration-900 ease-cotsy">
+    <div class="grid grid-cols-12 items-center gap-2">
+      <!-- Col 1-3: Sanctuary Identifier & Geodesic Coordinates -->
+      <div class="col-span-6 md:col-span-3 flex flex-col gap-0.5">
+        <a
+          href="#prologue"
+          class="text-[10px] tracking-[0.24em] uppercase font-light text-ink-primary hover:text-accent-hearth transition-colors duration-450 ease-cotsy flex items-center gap-2"
+        >
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent-hearth"></span>
+          <span>COTSY // ARCHIVE N° 04</span>
+        </a>
+        <span class="text-[9px] tracking-[0.22em] uppercase font-thin text-ink-muted">
+          51°49'14.2"N · 001°52'08.9"W · ELEV 214M
+        </span>
+      </div>
+
+      <!-- Col 4-6: Uninhabited Negative Space Datum + Live Local Solar Time -->
+      <div class="hidden lg:flex lg:col-span-3 items-center gap-6">
+        <div class="flex flex-col">
+          <span class="text-[9px] tracking-[0.24em] uppercase font-thin text-ink-muted">
+            COTSWOLD WOLD SOLAR
+          </span>
+          <span id="cotsy-live-clock" class="text-[10px] tracking-[0.18em] uppercase font-light text-ink-secondary">
+            06:42:18 GMT // BARO 1018 HPA
+          </span>
+        </div>
+      </div>
+
+      <!-- Col 7-12: Diurnal Atmosphere Switcher + Datum Grid + Manifest Inspector -->
+      <div class="col-span-6 md:col-span-9 lg:col-span-6 flex flex-wrap items-center justify-end gap-2 md:gap-4">
+        <!-- Diurnal Light Selector -->
+        <div
+          class="inline-flex items-center hairline-box p-0.5 bg-canvas-secondary/60"
+          role="group"
+          aria-label="Diurnal Light State"
+        >
+          <button
+            type="button"
+            data-theme-trigger="limestone_daylight"
+            class="theme-btn px-2.5 py-1 text-[9px] tracking-[0.2em] uppercase font-light transition-all duration-450 ease-cotsy bg-canvas-primary text-ink-primary"
+          >
+            01 DAWN
+          </button>
+          <button
+            type="button"
+            data-theme-trigger="meadow_dusk"
+            class="theme-btn px-2.5 py-1 text-[9px] tracking-[0.2em] uppercase font-light transition-all duration-450 ease-cotsy text-ink-muted hover:text-ink-primary"
+          >
+            02 DUSK
+          </button>
+          <button
+            type="button"
+            data-theme-trigger="bogoak_nocturne"
+            class="theme-btn px-2.5 py-1 text-[9px] tracking-[0.2em] uppercase font-light transition-all duration-450 ease-cotsy text-ink-muted hover:text-ink-primary"
+          >
+            03 NOCTURNE
+          </button>
+        </div>
+
+        <!-- Architectural Datum Columns Toggle -->
+        <button
+          type="button"
+          id="toggle-datum-grid"
+          class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 hairline-box text-[9px] tracking-[0.2em] uppercase font-light text-ink-secondary hover:text-ink-primary hover:border-ink-primary transition-all duration-450 ease-cotsy"
+          aria-pressed="true"
+        >
+          <span id="datum-indicator" class="w-1.5 h-1.5 bg-accent-lichen inline-block"></span>
+          <span>DATUM: ON</span>
+        </button>
+
+        <!-- Acoustic Hearth & Meadow Field Toggle -->
+        <button
+          type="button"
+          id="toggle-acoustic-field"
+          class="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 hairline-box text-[9px] tracking-[0.2em] uppercase font-light text-ink-secondary hover:text-ink-primary transition-all duration-450 ease-cotsy"
+          aria-pressed="false"
+        >
+          <span id="acoustic-indicator" class="w-1.5 h-1.5 rounded-full border border-ink-muted inline-block"></span>
+          <span id="acoustic-label">ACOUSTIC: MUTE</span>
+        </button>
+
+        <!-- Design System JSON Manifest Drawer Button -->
+        <button
+          type="button"
+          id="open-manifest-drawer"
+          class="inline-flex items-center gap-1.5 px-3 py-1 hairline-box bg-ink-primary text-canvas-primary text-[9px] tracking-[0.22em] uppercase font-light hover:bg-accent-hearth transition-colors duration-450 ease-cotsy"
+        >
+          <span>DESIGN_SYSTEM.JSON</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Fixed Bottom Telemetry Rail: Live Spatial Vacancy & Cubic-Bezier Kinematics -->
+<div
+  class="fixed bottom-0 left-0 right-0 z-40 pointer-events-none hidden md:block"
+  aria-label="Spatial Vacancy and Motion Physics Telemetry"
+>
+  <div class="w-full px-10 py-2.5 hairline-t bg-canvas-primary/80 backdrop-blur-md pointer-events-auto flex items-center justify-between text-[9px] tracking-[0.22em] uppercase font-thin text-ink-muted transition-colors duration-900 ease-cotsy">
+    <div class="flex items-center gap-6">
+      <div class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-accent-lichen"></span>
+        <span>CANVAS VACANCY:</span>
+        <span id="telemetry-vacancy-value" class="font-light text-ink-primary">64.8%</span>
+        <span id="telemetry-vacancy-status" class="text-accent-lichen font-light">[≥50.0% SUBSTRATE VERIFIED]</span>
+      </div>
+      <span class="text-ink-muted/40">|</span>
+      <div class="hidden lg:flex items-center gap-2">
+        <span>MOTION LAW:</span>
+        <span class="font-light text-ink-secondary">cubic-bezier(0.16, 1, 0.3, 1)</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <div class="flex items-center gap-3">
+        <a href="#prologue" class="hover:text-ink-primary transition-colors duration-450 ease-cotsy">00.PROLOGUE</a>
+        <a href="#lithic-thesis" class="hover:text-ink-primary transition-colors duration-450 ease-cotsy">01.THESIS</a>
+        <a href="#chambers" class="hover:text-ink-primary transition-colors duration-450 ease-cotsy">02.CHAMBERS</a>
+        <a href="#material-substrate" class="hover:text-ink-primary transition-colors duration-450 ease-cotsy">03.MATTER</a>
+        <a href="#thermal-refectory" class="hover:text-ink-primary transition-colors duration-450 ease-cotsy">04.THERMAL</a>
+        <a href="#residency-dossier" class="hover:text-ink-primary transition-colors duration-450 ease-cotsy">05.RESIDENCY</a>
+      </div>
+      <span class="text-ink-muted/40">|</span>
+      <div class="flex items-center gap-2">
+        <span>Y-AXIS:</span>
+        <span id="telemetry-scroll-y" class="font-light text-ink-primary">0000PX</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Design System & Motion Physics Drawer Modal -->
+<aside
+  id="manifest-drawer"
+  class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-opacity duration-900 ease-cotsy"
+  aria-hidden="true"
+  aria-label="Design System JSON Specification Inspector"
+>
+  <div
+    id="manifest-drawer-backdrop"
+    class="absolute inset-0 bg-ink-primary/40 backdrop-blur-sm"
+  ></div>
+  <div
+    id="manifest-drawer-panel"
+    class="absolute top-0 right-0 bottom-0 w-full max-w-2xl bg-canvas-primary hairline-l p-6 md:p-12 overflow-y-auto translate-x-full transition-transform duration-1100 ease-cotsy flex flex-col justify-between gap-8"
+  >
+    <div>
+      <div class="flex items-center justify-between pb-6 hairline-b">
+        <div>
+          <p class="text-[9px] tracking-[0.26em] uppercase font-thin text-ink-muted">
+            ARTIFACT SPECIFICATION // TARGET: DESIGN_SYSTEM.JSON
+          </p>
+          <h2 class="font-editorial text-3xl md:text-4xl mt-1 text-ink-primary">
+            Atmospheric Spatial Luxury Tokens
+          </h2>
+        </div>
+        <button
+          type="button"
+          id="close-manifest-drawer"
+          class="px-3 py-1.5 hairline-box text-[10px] tracking-[0.22em] uppercase font-light text-ink-primary hover:bg-ink-primary hover:text-canvas-primary transition-colors duration-450 ease-cotsy"
+        >
+          [CLOSE ESC]
+        </button>
+      </div>
+
+      <!-- Interactive Cubic-Bezier(0.16, 1, 0.3, 1) Oscilloscope Visualizer -->
+      <div class="mt-8 p-5 hairline-box bg-canvas-secondary/40">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-[10px] tracking-[0.22em] uppercase font-light text-ink-primary">
+            MOTION LAW OSCILLOSCOPE // CUBIC-BEZIER(0.16, 1, 0.3, 1)
+          </span>
+          <button
+            type="button"
+            id="trigger-bezier-pulse"
+            class="px-2.5 py-1 hairline-box text-[9px] tracking-[0.2em] uppercase font-light text-ink-primary hover:bg-ink-primary hover:text-canvas-primary transition-colors duration-450 ease-cotsy"
+          >
+            [PULSE KINEMATICS]
+          </button>
+        </div>
+        <div class="grid grid-cols-12 gap-4 items-center">
+          <div class="col-span-5">
+            <svg viewBox="0 0 120 120" class="w-full h-28 hairline-box bg-canvas-primary p-2">
+              <line x1="10" y1="110" x2="110" y2="10" stroke="currentColor" stroke-opacity="0.15" stroke-dasharray="2 2" />
+              <line x1="10" y1="110" x2="26" y2="10" stroke="var(--accent-hearth)" stroke-width="0.75" stroke-opacity="0.6" />
+              <line x1="110" y1="10" x2="40" y2="10" stroke="var(--accent-hearth)" stroke-width="0.75" stroke-opacity="0.6" />
+              <path
+                d="M 10 110 C 26 10, 40 10, 110 10"
+                fill="none"
+                stroke="var(--ink-primary)"
+                stroke-width="1.5"
+              />
+              <circle cx="26" cy="10" r="2.5" fill="var(--accent-hearth)" />
+              <circle cx="40" cy="10" r="2.5" fill="var(--accent-hearth)" />
+            </svg>
+          </div>
+          <div class="col-span-7 flex flex-col gap-3">
+            <p class="text-[11px] font-light text-ink-secondary leading-relaxed">
+              Strict sweeping ease-out profile. Rapid initial kinetic release (P1: 0.16, 1.0) settling into an extended, frictionless asymptotic deceleration (P2: 0.30, 1.0).
+            </p>
+            <div class="w-full h-6 hairline-box bg-canvas-primary relative overflow-hidden flex items-center px-1">
+              <div
+                id="bezier-test-shuttle"
+                class="w-4 h-4 bg-accent-hearth transition-transform duration-1450 ease-cotsy"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Raw design_system.json Live Readout -->
+      <div class="mt-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[9px] tracking-[0.24em] uppercase font-thin text-ink-muted">
+            COMPILED ARTIFACT // /design_system.json
+          </span>
+          <a
+            href="/design_system.json"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[9px] tracking-[0.22em] uppercase font-light text-accent-hearth hover:underline"
+          >
+            [OPEN RAW JSON ↗]
+          </a>
+        </div>
+        <pre class="p-4 hairline-box bg-canvas-secondary/50 text-[11px] font-light text-ink-secondary overflow-x-auto max-h-96 leading-relaxed">{JSON.stringify(designSystem, null, 2)}</pre>
+      </div>
+    </div>
+
+    <div class="pt-4 hairline-t flex items-center justify-between text-[9px] tracking-[0.22em] uppercase font-thin text-ink-muted">
+      <span>SSG PARTIAL HYDRATION VERIFIED</span>
+      <span>MAX BODY WEIGHT: 300 MONOSPACE</span>
+    </div>
+  </div>
+</aside>

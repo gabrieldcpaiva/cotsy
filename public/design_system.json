@@ -1,0 +1,201 @@
+{
+  "$schema": "https://cotsy.sanctuary/schemas/design-system-v1.json",
+  "artifact_id": "COTSY-SPATIAL-MANIFEST-2026",
+  "title": "COTSY // The Vale Archive — Atmospheric Spatial Luxury Design System",
+  "version": "1.0.0",
+  "rendering_strategy": {
+    "mode": "Static Site Generation (SSG) with Partial Hydration Islands",
+    "framework": "Astro 4.x + Tailwind CSS Utility Abstraction + Vanilla JS Hardware-Accelerated Scroll Hooks",
+    "hydration_islands": [
+      {
+        "id": "island-kinetic-scroll-engine",
+        "directive": "client:load",
+        "responsibility": "RAF-bound virtual smooth scroll interpolation, multi-layered Y-axis parallax transforms, and live spatial vacancy telemetry"
+      },
+      {
+        "id": "island-atmosphere-chronograph",
+        "directive": "client:idle",
+        "responsibility": "Diurnal light state controller (Dawn Mist / High Limestone / Hearth Nocturne), ambient acoustic field synthesis, and barometric telemetry"
+      },
+      {
+        "id": "island-sanctuary-ledger",
+        "directive": "client:visible",
+        "responsibility": "Interactive architectural chamber inspection, tactile material swatch comparator, and private residency inquiry dossier"
+      }
+    ]
+  },
+  "vetoes": {
+    "prohibited_motion": [
+      "linear",
+      "ease",
+      "ease-in",
+      "ease-out",
+      "ease-in-out",
+      "spring()",
+      "default framework transition curves"
+    ],
+    "prohibited_layouts": [
+      "Symmetric 3-column SaaS feature cards",
+      "Centered corporate hero banners with dual pill CTAs",
+      "Predictable bento grids or dense dashboard masonry",
+      "Viewport saturation exceeding 50% element coverage"
+    ],
+    "prohibited_typography": [
+      "Body text weight exceeding 300",
+      "Sans-serif corporate UI fonts (Inter, Roboto, Arial)",
+      "Bold or medium weights on paragraphs, captions, or metadata"
+    ]
+  },
+  "spatial_vacancy_law": {
+    "minimum_negative_space_ratio": 0.50,
+    "target_vacancy_envelope": {
+      "min": 0.56,
+      "optimal": 0.64,
+      "max": 0.78
+    },
+    "architectural_datum": {
+      "columns": 12,
+      "max_occupied_columns_per_horizontal_band": 5,
+      "mandatory_void_bays": "Minimum 6 of 12 columns in any horizontal viewport slice must remain unencumbered limestone or bog-oak canvas",
+      "vertical_breathing_cadence_vh": {
+        "section_void_top": "18vh",
+        "section_void_bottom": "22vh",
+        "inter_plate_offset": "14vh"
+      }
+    }
+  },
+  "motion_physics": {
+    "canonical_curve": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "bezier_control_points": {
+      "p1x": 0.16,
+      "p1y": 1.0,
+      "p2x": 0.3,
+      "p2y": 1.0
+    },
+    "scroll_interpolation": {
+      "damping_factor": 0.075,
+      "precision_epsilon": 0.05,
+      "hardware_compositing": "translate3d(0, var(--parallax-y, 0px), 0) scale3d(var(--plate-scale, 1), var(--plate-scale, 1), 1)",
+      "will_change_policy": "transform, opacity"
+    },
+    "durations": {
+      "micro_utility": "450ms",
+      "editorial_reveal": "1100ms",
+      "curtain_unveil": "1450ms",
+      "atmospheric_shift": "1800ms"
+    },
+    "parallax_strata": {
+      "stratum_0_datum_lines": 0.0,
+      "stratum_1_deep_lithic": -0.065,
+      "stratum_2_architectural_plate": -0.135,
+      "stratum_3_editorial_folio": 0.095,
+      "stratum_4_floating_specimen": -0.21,
+      "internal_image_pan": 0.16
+    }
+  },
+  "color_substrate": {
+    "themes": {
+      "limestone_daylight": {
+        "label": "01 // OOLITIC DAWN (51°49'N)",
+        "canvas_primary": "#F3EFE6",
+        "canvas_secondary": "#EAE4D7",
+        "canvas_elevated": "#F8F5EE",
+        "ink_primary": "#181613",
+        "ink_secondary": "#544F46",
+        "ink_muted": "#7E786C",
+        "accent_hearth": "#9E5A3C",
+        "accent_beeswax": "#B89364",
+        "accent_lichen": "#5E6454",
+        "hairline_rule": "rgba(24, 22, 19, 0.10)"
+      },
+      "meadow_dusk": {
+        "label": "02 // VALE CREPUSCULAR",
+        "canvas_primary": "#E5E0D5",
+        "canvas_secondary": "#DAD3C5",
+        "canvas_elevated": "#ECE8DF",
+        "ink_primary": "#161512",
+        "ink_secondary": "#4B473F",
+        "ink_muted": "#706B60",
+        "accent_hearth": "#8F4E32",
+        "accent_beeswax": "#A68254",
+        "accent_lichen": "#4F5646",
+        "hairline_rule": "rgba(22, 21, 18, 0.12)"
+      },
+      "bogoak_nocturne": {
+        "label": "03 // HEARTH NOCTURNE",
+        "canvas_primary": "#12110E",
+        "canvas_secondary": "#1A1814",
+        "canvas_elevated": "#211E19",
+        "ink_primary": "#EFECE4",
+        "ink_secondary": "#A8A195",
+        "ink_muted": "#6E685E",
+        "accent_hearth": "#C8734E",
+        "accent_beeswax": "#D4B284",
+        "accent_lichen": "#858D78",
+        "hairline_rule": "rgba(239, 236, 228, 0.11)"
+      }
+    },
+    "texture_engine": {
+      "type": "SVG feTurbulence Procedural Plaster & Unbleached Flax Grain",
+      "base_frequency": "0.82",
+      "num_octaves": 4,
+      "blend_mode": "multiply",
+      "opacity_day": 0.038,
+      "opacity_night": 0.055
+    }
+  },
+  "typographic_substrate": {
+    "editorial_serif": {
+      "font_family": "'Cormorant Garamond', 'Instrument Serif', Georgia, serif",
+      "allowed_weights": [300, 400],
+      "roles": {
+        "hero_monolith": {
+          "size": "clamp(3.5rem, 8.8vw, 9.25rem)",
+          "line_height": 0.89,
+          "letter_spacing": "-0.035em",
+          "font_weight": 300
+        },
+        "chapter_head": {
+          "size": "clamp(2.35rem, 5.2vw, 5.4rem)",
+          "line_height": 0.94,
+          "letter_spacing": "-0.028em",
+          "font_weight": 300
+        },
+        "folio_title": {
+          "size": "clamp(1.65rem, 2.8vw, 2.85rem)",
+          "line_height": 1.06,
+          "letter_spacing": "-0.018em",
+          "font_weight": 300
+        }
+      }
+    },
+    "utility_monospace": {
+      "font_family": "'IBM Plex Mono', 'JetBrains Mono', monospace",
+      "strict_max_weight": 300,
+      "allowed_weights": [200, 300],
+      "roles": {
+        "body_narrative": {
+          "size": "0.8125rem",
+          "line_height": 1.92,
+          "letter_spacing": "0.015em",
+          "font_weight": 300,
+          "max_measure": "46ch"
+        },
+        "technical_spec": {
+          "size": "0.6875rem",
+          "line_height": 1.65,
+          "letter_spacing": "0.14em",
+          "font_weight": 300,
+          "text_transform": "uppercase"
+        },
+        "micro_coordinate": {
+          "size": "0.59375rem",
+          "line_height": 1.35,
+          "letter_spacing": "0.24em",
+          "font_weight": 200,
+          "text_transform": "uppercase"
+        }
+      }
+    }
+  }
+}

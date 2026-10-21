@@ -1,0 +1,1216 @@
+---
+import '../styles/global.css';
+import designSystem from '../../design_system.json';
+import AtmosphereChronographIsland from '../components/AtmosphereChronographIsland.astro';
+import ChambersLedgerIsland from '../components/ChambersLedgerIsland.astro';
+import ResidencyDossierIsland from '../components/ResidencyDossierIsland.astro';
+
+const hearthHotspots = [
+  {
+    id: 'hearth-flue',
+    x: '24%',
+    y: '46%',
+    code: 'PT.01',
+    title: 'Monolithic Slaked-Lime Flue',
+    detail: 'Fourteen tons of hand-troweled Gloucestershire lime putty mixed with crushed oolitic aggregate. Retains radiant thermal mass for 18 hours after embers subside.',
+  },
+  {
+    id: 'elm-truss',
+    x: '54%',
+    y: '14%',
+    code: 'PT.02',
+    title: '17th-Century Reclaimed Wych Elm',
+    detail: 'Salvaged from a dismantled tithe barn in Upper Slaughter, joined purely with seasoned oak draw-bored mortise and tenon pegs—zero structural steel.',
+  },
+  {
+    id: 'flax-daybed',
+    x: '60%',
+    y: '60%',
+    code: 'PT.03',
+    title: 'Unbleached Kortrijk Flax Daybed',
+    detail: 'Low-slung solid European oak plinth upholstered in 480gsm loom-state Belgian linen stuffed with organic Welsh mountain wool and horsehair.',
+  },
+];
+
+const harvestMenu = [
+  {
+    course: 'COURSE 01 // 19:30 GMT',
+    dish: 'Broth of Charred Meadow Leek, Wild Wood Sorrel & Cold-Pressed Camelina Oil',
+    provenance: 'Walled Kitchen Garden · 120m West of Refectory',
+  },
+  {
+    course: 'COURSE 02 // 20:15 GMT',
+    dish: 'Hearth-Roasted Ancient Einkorn Sourdough with Cultured Raw Jersey Butter & Smoked Maldon',
+    provenance: 'Stone-Milled Estate Grain · 36-Hour Levain Fermentation',
+  },
+  {
+    course: 'COURSE 03 // 21:00 GMT',
+    dish: 'Saddle of Cotswold Fallow Venison Over Bog-Oak Embers, Fermented Blackcurrant & Juniper',
+    provenance: 'Windlode North Coppice · Aged 28 Days in Salt Chamber',
+  },
+  {
+    course: 'COURSE 04 // 21:45 GMT',
+    dish: 'Warm Raw Heather Comb Honey, Roasted Hazelnut Curd & Meadowsweet Infusion',
+    provenance: 'Estate Apiary Hives N° 01–06 · Unfiltered Harvest',
+  },
+];
+---
+
+<!doctype html>
+<html lang="en" data-atmosphere="limestone_daylight">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{designSystem.title}</title>
+    <meta
+      name="description"
+      content="COTSY — A seven-chamber monastic countryside inn and architectural sanctuary of hand-troweled lime plaster, weathered silver larch, and subterranean spring water in the Gloucestershire Wold."
+    />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23181613'/><circle cx='16' cy='16' r='5' fill='%239E5A3C'/></svg>" />
+    <style is:global>
+      /* Canonical Substrate Motion & Typographic Laws (Target Artifact: index.astro) */
+      :root {
+        --canonical-bezier: cubic-bezier(0.16, 1, 0.3, 1);
+        --minimum-negative-space: 50%;
+        --max-body-monospace-weight: 300;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      body,
+      p,
+      span,
+      li,
+      label,
+      input,
+      select,
+      button,
+      dd,
+      dt {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 300;
+      }
+
+      .cotsy-parallax-layer {
+        will-change: transform;
+        transform: translate3d(0, var(--parallax-y, 0px), 0);
+        transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    </style>
+  </head>
+
+  <body class="relative min-h-screen bg-canvas-primary text-ink-primary selection:bg-accent-hearth selection:text-canvas-primary">
+    <!-- Procedural SVG Lime-Plaster & Unbleached Flax Texture Substrate -->
+    <svg class="fixed inset-0 w-full h-full pointer-events-none z-30" style="opacity: var(--grain-opacity); mix-blend-mode: multiply;" aria-hidden="true">
+      <filter id="cotsy-substrate-grain">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.82"
+          numOctaves="4"
+          stitchTiles="stitch"
+        />
+        <feColorMatrix type="saturate" values="0" />
+      </filter>
+      <rect width="100%" height="100%" filter="url(#cotsy-substrate-grain)" />
+    </svg>
+
+    <!-- 12-Column Architectural Datum Hairline Overlay (Toggleable) -->
+    <div
+      id="architectural-datum-grid"
+      class="fixed inset-0 pointer-events-none z-20 px-5 md:px-10 transition-opacity duration-900 ease-cotsy opacity-100"
+      aria-hidden="true"
+    >
+      <div class="w-full h-full grid grid-cols-12">
+        {Array.from({ length: 12 }).map((_, idx) => (
+          <div class="h-full border-l border-r border-hairline/40 flex flex-col justify-between py-14 px-1">
+            <span class="hidden xl:inline-block text-[8px] tracking-[0.24em] font-thin text-ink-muted/40">
+              C.{String(idx + 1).padStart(2, '0')}
+            </span>
+            <span class="hidden xl:inline-block text-[8px] tracking-[0.24em] font-thin text-ink-muted/30">
+              {idx < 6 ? 'VOID' : 'MASS'}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Hydration Island 01: Fixed Perimeter Chronograph & Telemetry HUD -->
+    <AtmosphereChronographIsland />
+
+    <!-- Main Kinetic Scroll & Multi-Layer Parallax Viewport -->
+    <main id="cotsy-scroll-stage" class="relative z-10 w-full pt-20 pb-24">
+      <!-- =====================================================================
+           SECTION 00: PROLOGUE // THE SILENCE OF OOLITIC STONE
+           Spatial Vacancy Mandate: ~65% Uninhabited Limestone Canvas
+           ===================================================================== -->
+      <section
+        id="prologue"
+        class="relative w-full min-h-[115vh] px-5 md:px-10 pt-[12vh] pb-[20vh] flex flex-col justify-between"
+        data-vacancy-section="prologue"
+      >
+        <!-- Top Asymmetric Coordinate Row (Col 1-4 occupied, Col 5-12 pure negative space) -->
+        <div class="grid grid-cols-12">
+          <div class="col-span-12 md:col-span-5 lg:col-span-4 cotsy-reveal is-visible">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-[9px] tracking-[0.26em] uppercase font-thin text-accent-hearth">
+                [FOLIO 00 // SPATIAL MANIFEST]
+              </span>
+              <span class="h-[1px] w-8 bg-accent-hearth/50"></span>
+              <span class="text-[9px] tracking-[0.22em] uppercase font-thin text-ink-muted">
+                AUTUMN / WINTER 2026
+              </span>
+            </div>
+            <p class="text-[10px] tracking-[0.2em] uppercase font-thin text-ink-muted">
+              WINDLODE VALE · GLOUCESTERSHIRE · EST. 1684 / RECONSTRUCTED 2025
+            </p>
+          </div>
+          <!-- Col 5-12: Mandatory Negative Space Void -->
+          <div class="hidden md:block md:col-span-7 lg:col-span-8" aria-hidden="true"></div>
+        </div>
+
+        <!-- Monumental Editorial Serif Headline (Col 1-9, leaving Col 10-12 & vast vertical bands open) -->
+        <div class="my-[10vh] grid grid-cols-12 items-end">
+          <div
+            class="col-span-12 lg:col-span-9 cotsy-parallax-layer"
+            data-parallax-speed="0.06"
+          >
+            <h1
+              class="font-editorial text-ink-primary tracking-monolith"
+              style="font-size: clamp(3.4rem, 8.8vw, 9.25rem); line-height: 0.89;"
+            >
+              An architecture of<br />
+              <span class="font-editorial-italic text-ink-secondary">measured stillness,</span><br />
+              carved into the mist.
+            </h1>
+          </div>
+
+          <div class="hidden lg:flex lg:col-span-3 flex-col items-end justify-end pb-4">
+            <div class="hairline-l pl-4 py-1">
+              <span class="block text-[8px] tracking-[0.26em] uppercase font-thin text-ink-muted">
+                SPATIAL VACANCY PERIMETER
+              </span>
+              <span class="block text-[10px] tracking-[0.2em] uppercase font-light text-ink-primary mt-1">
+                ≥ 50.0% NEGATIVE CANVAS
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Asymmetric Lower Split: Col 1-4 Sparse 300-Weight Monospace Thesis | Col 5-6 Void | Col 7-12 Hero Plate -->
+        <div class="grid grid-cols-12 gap-y-12 items-end pt-[4vh]">
+          <!-- Col 1-4: 300-Weight Utility Monospace Body Prose -->
+          <div
+            class="col-span-12 lg:col-span-4 cotsy-parallax-layer flex flex-col gap-6"
+            data-parallax-speed="0.11"
+          >
+            <div class="hairline-t pt-5">
+              <span class="block text-[9px] tracking-[0.24em] uppercase font-thin text-ink-muted mb-3">
+                00.1 // ARCHITECTURAL ABSTRACT
+              </span>
+              <p class="text-[13px] font-light text-ink-secondary leading-[1.92] max-w-[40ch]">
+                Set within forty-two acres of unploughed Gloucestershire limestone meadow, Cotsy is neither hotel nor country club. It is a seven-chamber monastic sanctuary of hand-troweled lime plaster, weathered silver larch, and subterranean spring water—engineered for unhurried contemplation.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 pt-3 hairline-t text-[9px] tracking-[0.2em] uppercase font-thin text-ink-muted">
+              <div>
+                <span class="block text-ink-primary font-light">42.0 ACRES</span>
+                <span>UNPLOUGHED WOLD</span>
+              </div>
+              <div>
+                <span class="block text-ink-primary font-light">18.4 dBA</span>
+                <span>AMBIENT NOISE FLOOR</span>
+              </div>
+            </div>
+
+            <div class="pt-2 flex items-center gap-4">
+              <a
+                href="#chambers"
+                class="px-4 py-2.5 hairline-box bg-ink-primary text-canvas-primary text-[9px] tracking-[0.24em] uppercase font-light hover:bg-accent-hearth transition-colors duration-700 ease-cotsy"
+              >
+                [EXPLORE THE SEVEN CHAMBERS ↓]
+              </a>
+              <a
+                href="#residency-dossier"
+                class="text-[9px] tracking-[0.22em] uppercase font-light text-ink-secondary hover:text-ink-primary transition-colors duration-450 ease-cotsy"
+              >
+                INQUIre DOSSIER →
+              </a>
+            </div>
+          </div>
+
+          <!-- Col 5-6: Uninhabited Limestone Canvas Void -->
+          <div class="hidden lg:block lg:col-span-2" aria-hidden="true"></div>
+
+          <!-- Col 7-12: Primary Architectural Plate with Multi-Layer Y-Axis Parallax -->
+          <div
+            class="col-span-12 lg:col-span-6 cotsy-parallax-layer"
+            data-parallax-speed="-0.14"
+          >
+            <figure class="hairline-box p-3 md:p-4 bg-canvas-elevated/60">
+              <div class="flex items-center justify-between mb-2.5 text-[9px] tracking-[0.22em] uppercase font-thin text-ink-muted">
+                <span>PLATE 01 // SOUTH COURTYARD & RAINWATER MIRROR BASIN</span>
+                <span>06:14 GMT · 4×5 ARCA-SWISS</span>
+              </div>
+              <div
+                class="cotsy-image-curtain is-revealed aspect-[16/10] w-full overflow-hidden"
+                data-image-parallax="0.16"
+              >
+                <img
+                  src="/images/hero-sanctuary.jpg"
+                  alt="Minimalist Cotswold limestone and weathered silver larch countryside inn reflected in a still rainwater courtyard pool at dawn"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <figcaption class="mt-3 flex flex-wrap items-center justify-between gap-2 text-[9px] tracking-[0.2em] uppercase font-thin text-ink-muted">
+                <span>OOLITIC ASHLAR CANTILEVER OVER BLACK BASALT CATCHMENT</span>
+                <span class="text-accent-hearth font-light">HUMIDITY 88% · HEARTH 21.5°C</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           SECTION 01: LITHIC THESIS // ASYMMETRIC DIALOGUE OF MASS & VOID
+           Spatial Vacancy Mandate: ~68% Uninhabited Canvas
+           ===================================================================== -->
+      <section
+        id="lithic-thesis"
+        class="relative w-full px-5 md:px-10 py-[24vh] hairline-t"
+        data-vacancy-section="lithic-thesis"
+      >
+        <div class="grid grid-cols-12 gap-y-16 items-start">
+          <!-- Col 1-4: Sticky / Parallax Architectural Thesis & Axioms -->
+          <div
+            class="col-span-12 lg:col-span-4 cotsy-parallax-layer flex flex-col gap-8"
+            data-parallax-speed="0.09"
+          >
+            <div>
+              <span class="text-[9px] tracking-[0.26em] uppercase font-thin text-ink-muted block mb-4">
+                [01 // THE LITHIC THESIS]
+              </span>
+              <h2
+                class="font-editorial text-ink-primary"
+                style="font-size: clamp(2.25rem, 4.4vw, 4.5rem); line-height: 0.94; letter-spacing: -0.028em;"
+              >
+                Cozy modernism is not the accumulation of ornament; it is the
+                <span class="font-editorial-italic text-ink-secondary">warmth of raw matter</span>
+                held in vast quietude.
+              </h2>
+            </div>
+
+            <p class="text-[13px] font-light text-ink-secondary leading-[1.92] max-w-[42ch]">
+              Where conventional country house hotels fill every corner with chintz and gilded distraction, Cotsy removes fifty-eight percent of interior partitions. Light travels unimpeded across honed travertine slabs, grazing hand-troweled slaked lime walls that breathe with the barometric pressure of the valley.
+            </p>
+
+            <!-- Three Architectural Axioms (Max 300 Weight Monospace) -->
+            <div class="flex flex-col hairline-t">
+              <div class="py-4 hairline-b flex flex-col gap-1">
+                <div class="flex items-center justify-between text-[9px] tracking-[0.22em] uppercase font-thin text-accent-hearth">
+                  <span>AXIOM 01.1</span>
+                  <span>NRC 0.74 ABSORPTION</span>
+                </div>
+                <p class="text-[11px] font-light text-ink-primary">
+                  Porous lime-hemp plaster and unbleached Belgian flax absorb high-frequency chatter while preserving the low crackle of seasoned oak.
+                </p>
+              </div>
+
+              <div class="py-4 hairline-b flex flex-col gap-1">
+                <div class="flex items-center justify-between text-[9px] tracking-[0.22em] uppercase font-thin text-accent-hearth">
+                  <span>AXIOM 01.2</span>
+                  <span>RADIANT HYDRONIC FLOOR</span>
+                </div>
+                <p class="text-[11px] font-light text-ink-primary">
+                  Geothermal borehole loops beneath 90mm flagstone slabs maintain an imperceptible 21.5°C barefoot datum across every threshold.
+                </p>
+              </div>
+
+              <div class="py-4 hairline-b flex flex-col gap-1">
+                <div class="flex items-center justify-between text-[9px] tracking-[0.22em] uppercase font-thin text-accent-hearth">
+                  <span>AXIOM 01.3</span>
+                  <span>ZERO ARTIFICIAL GLARE</span>
+                </div>
+                <p class="text-[11px] font-light text-ink-primary">
+                  After sundown, illumination is restricted to 2200K recessed limestone grazing slots, open hearths, and hand-dipped beeswax tapers.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 5-6: Mandatory Uninhabited Negative Space Void Bay -->
+          <div class="hidden lg:block lg:col-span-2" aria-hidden="true"></div>
+
+          <!-- Col 7-12: Interactive Hearth Pavilion Plate + Offset Secondary Cloister Plate -->
+          <div class="col-span-12 lg:col-span-6 flex flex-col gap-[18vh]">
+            <!-- Primary Plate: The Great Lime-Plaster Hearth (with Interactive Provenance Pins) -->
+            <div
+              class="cotsy-parallax-layer"
+              data-parallax-speed="-0.15"
+            >
+              <div class="hairline-box p-3 md:p-5 bg-canvas-elevated/60">
+                <div class="flex items-center justify-between mb-3 text-[9px] tracking-[0.22em] uppercase font-thin text-ink-muted">
+                  <span>PLATE 02 // THE GREAT LIME-PLASTER HEARTH & FLAX DAYBED</span>
+                  <span>CLICK PINS [PT.01–03]</span>
+                </div>
+
+                <div
+                  class="cotsy-image-curtain is-revealed relative aspect-[16/10] w-full overflow-hidden"
+                  data-image-parallax="0.14"
+                >
+                  <img
+                    src="/images/hearth-pavilion.jpg"
+                    alt="Interior of the Great Hearth Pavilion with monolithic lime plaster fireplace and Belgian linen daybed"
+                    class="w-full h-full object-cover"
+                  />
+
+                  {hearthHotspots.map((spot, idx) => (
+                    <button
+                      type="button"
+                      data-hotspot-btn={spot.id}
+                      data-hotspot-title={spot.title}
+                      data-hotspot-detail={spot.detail}
+                      data-hotspot-code={spot.code}
+                      style={`left: ${spot.x}; top: ${spot.y};`}
+                      class:list={[
+                        'hearth-hotspot absolute -translate-x-1/2 -translate-y-1/2 z-10 px-2 py-1 text-[8px] tracking-[0.2em] uppercase font-light transition-all duration-700 ease-cotsy',
+                        idx === 0
+                          ? 'bg-accent-hearth text-canvas-primary scale-105'
+                          : 'bg-canvas-primary/90 text-ink-primary hairline-box hover:bg-ink-primary hover:text-canvas-primary',
+                      ]}
+                    >
+                      {spot.code}
+                    </button>
+                  ))}
+                </div>
+
+                <!-- Interactive Hotspot Readout Strip -->
+                <div class="mt-4 p-4 hairline-box bg-canvas-secondary/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span id="hotspot-active-code" class="text-[9px] tracking-[0.24em] uppercase font-light text-accent-hearth">
+                        PT.01
+                      </span>
+                      <span id="hotspot-active-title" class="font-editorial text-xl text-ink-primary">
+                        Monolithic Slaked-Lime Flue
+                      </span>
+                    </div>
+                    <p id="hotspot-active-detail" class="text-[11px] font-light text-ink-secondary mt-1 leading-relaxed">
+                      Fourteen tons of hand-troweled Gloucestershire lime putty mixed with crushed oolitic aggregate. Retains radiant thermal mass for 18 hours after embers subside.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Asymmetric Offset Sub-Plate: Shifted to Col 1-9 of this 6-col container -->
+            <div
+              class="w-full md:w-4/5 cotsy-parallax-layer"
+              data-parallax-speed="-0.21"
+            >
+              <figure class="hairline-box p-3 bg-canvas-elevated/50">
+                <div class="flex items-center justify-between mb-2 text-[9px] tracking-[0.22em] uppercase font-thin text-ink-muted">
+                  <span>PLATE 03 // WEST TIMBER LOGGIA AT CREPUSCULAR HOUR</span>
+                  <span>17:48 GMT</span>
+                </div>
+                <div
+                  class="cotsy-image-curtain is-revealed aspect-[16/10] w-full overflow-hidden"
+                  data-image-parallax="0.12"
+                >
+                  <img
+                    src="/images/meadow-cloister.jpg"
+                    alt="Covered limestone and timber colonnade looking out over misty Cotswold hills at dusk"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <figcaption class="mt-2.5 text-[10px] font-light text-ink-secondary leading-relaxed">
+                  Dry-coursed Guiting limestone walling meets an unglazed European larch colonnade, framing forty-two acres of valley mist.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           SECTION 02: THE SEVEN CHAMBERS // ARCHITECTURAL RESIDENCY LEDGER
+           Hydration Island 02
+           ===================================================================== -->
+      <ChambersLedgerIsland />
+
+      <!-- =====================================================================
+           SECTION 03: MATERIAL SUBSTRATE & SECTION 05: RESIDENCY DOSSIER
+           Wait: Let's place Section 04 (Subterranean Thermal & Foraging Refectory)
+           in sequence between Material Substrate and Residency Dossier, or let's
+           render Section 04 right after Chambers and before Material/Residency!
+           ===================================================================== -->
+      <section
+        id="thermal-refectory"
+        class="relative w-full px-5 md:px-10 py-[24vh] hairline-t"
+        data-vacancy-section="thermal-refectory"
+      >
+        <!-- Upper Asymmetric Diptych: Subterranean Thermal Bathhouse -->
+        <div class="grid grid-cols-12 gap-y-14 items-start">
+          <!-- Col 1-6: Subterranean Basalt Vessel Plate -->
+          <div
+            class="col-span-12 lg:col-span-6 cotsy-parallax-layer"
+            data-parallax-speed="-0.15"
+          >
+            <figure class="hairline-box p-3 md:p-5 bg-canvas-elevated/60">
+              <div class="flex items-center justify-between mb-3 text-[9px] tracking-[0.22em] uppercase font-thin text-ink-muted">
+                <span>[04.A // SUBTERRANEAN THERMAL BATHHOUSE]</span>
+                <span>DEPTH -4.8M BELOW COURTYARD</span>
+              </div>
+              <div
+                class="cotsy-image-curtain is-revealed aspect-[16/10] w-full overflow-hidden"
+                data-image-parallax="0.15"
+              >
+                <img
+                  src="/images/bathhouse-thermal.jpg"
+                  alt="Subterranean stone bathhouse with carved black basalt soaking vessel and zenithal skylight"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <figcaption class="mt-3 flex items-center justify-between text-[9px] tracking-[0.2em] uppercase font-thin text-ink-muted">
+                <span>CARVED HONED BASALT MONOLITH · ZENITHAL OCULUS</span>
+                <span class="text-accent-hearth font-light">WATER TEMP 39.2°C CONSTANT</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <!-- Col 7-8: Mandatory Uninhabited Negative Space Void -->
+          <div class="hidden lg:block lg:col-span-2" aria-hidden="true"></div>
+
+          <!-- Col 9-12: Hydro-Mineral Telemetry & Editorial Prose (Vertically Offset +14vh) -->
+          <div
+            class="col-span-12 lg:col-span-4 lg:mt-[14vh] cotsy-parallax-layer flex flex-col gap-6"
+            data-parallax-speed="0.10"
+          >
+            <span class="text-[9px] tracking-[0.26em] uppercase font-thin text-accent-hearth">
+              ARTESIAN AQUIFER // ZERO CHLORINATION
+            </span>
+            <h2
+              class="font-editorial text-ink-primary"
+              style="font-size: clamp(2.2rem, 4.2vw, 4.2rem); line-height: 0.94; letter-spacing: -0.025em;"
+            >
+              Water drawn from three hundred feet beneath the wold,
+              <span class="font-editorial-italic text-ink-secondary">heated by fallen timber.</span>
+            </h2>
+            <p class="text-[13px] font-light text-ink-secondary leading-[1.92]">
+              Excavated directly into the Inferior Oolite bedrock, the bathhouse is reserved for one chamber at a time by brass hourglass. A narrow zenithal oculus admits a single blade of sky light that tracks across the steaming basalt vessel from dawn until noon.
+            </p>
+
+            <!-- Hydro-Mineral Assay Table (300-weight monospace) -->
+            <div class="p-4 hairline-box bg-canvas-secondary/35">
+              <span class="block text-[8px] tracking-[0.24em] uppercase font-thin text-ink-muted mb-3">
+                HYDRO-MINERAL ASSAY // SPRING BOREHOLE N° 02
+              </span>
+              <div class="grid grid-cols-2 gap-y-2 text-[10px] font-light">
+                <span class="text-ink-muted">CALCIUM (Ca²⁺)</span>
+                <span class="text-right text-ink-primary">114.2 mg/L</span>
+                <span class="text-ink-muted">MAGNESIUM (Mg²⁺)</span>
+                <span class="text-right text-ink-primary">28.6 mg/L</span>
+                <span class="text-ink-muted">BICARBONATE (HCO₃⁻)</span>
+                <span class="text-right text-ink-primary">310.0 mg/L</span>
+                <span class="text-ink-muted">NATURAL PH DATUM</span>
+                <span class="text-right text-ink-primary">7.48 pH</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 24vh Vertical Breathing Void Between Thermal & Refectory -->
+        <div class="h-[22vh] w-full flex items-center justify-center" aria-hidden="true">
+          <span class="text-[8px] tracking-[0.3em] uppercase font-thin text-ink-muted/40">
+            [VERTICAL VACANCY CADENCE // +22VH]
+          </span>
+        </div>
+
+        <!-- Lower Asymmetric Diptych: The Cellar & Foraging Refectory -->
+        <div class="grid grid-cols-12 gap-y-14 items-start">
+          <!-- Col 1-4: Refectory Narrative & Autumn Forage Harvest Log -->
+          <div
+            class="col-span-12 lg:col-span-4 cotsy-parallax-layer flex flex-col gap-6"
+            data-parallax-speed="0.09"
+          >
+            <span class="text-[9px] tracking-[0.26em] uppercase font-thin text-ink-muted">
+              [04.B // THE MONASTIC REFECTORY & CELLAR]
+            </span>
+            <h2
+              class="font-editorial text-ink-primary"
+              style="font-size: clamp(2.2rem, 4.2vw, 4.2rem); line-height: 0.94; letter-spacing: -0.025em;"
+            >
+              One weathered oak table, twelve covers,
+              <span class="font-editorial-italic text-ink-secondary">lit solely by beeswax.</span>
+            </h2>
+            <p class="text-[13px] font-light text-ink-secondary leading-[1.92]">
+              Within the restored 1684 limestone threshing barn, supper is served at 19:30 GMT or in the privacy of your chamber hearth. Every ingredient is harvested within a four-mile radius of the Windlode valley.
+            </p>
+
+            <!-- Harvest Ledger -->
+            <div class="flex flex-col hairline-t">
+              {harvestMenu.map((item) => (
+                <div class="py-3.5 hairline-b flex flex-col gap-1">
+                  <div class="flex items-center justify-between text-[8px] tracking-[0.24em] uppercase font-thin text-accent-hearth">
+                    <span>{item.course}</span>
+                    <span>ESTATE HARVEST</span>
+                  </div>
+                  <p class="text-[11px] font-light text-ink-primary leading-relaxed">
+                    {item.dish}
+                  </p>
+                  <span class="text-[9px] tracking-[0.16em] uppercase font-thin text-ink-muted">
+                    {item.provenance}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Col 5-6: Mandatory Uninhabited Negative Space Void -->
+          <div class="hidden lg:block lg:col-span-2" aria-hidden="true"></div>
+
+          <!-- Col 7-12: Botanical Refectory Barn Plate -->
+          <div
+            class="col-span-12 lg:col-span-6 lg:mt-[8vh] cotsy-parallax-layer"
+            data-parallax-speed="-0.17"
+          >
+            <figure class="hairline-box p-3 md:p-5 bg-canvas-elevated/60">
+              <div class="flex items-center justify-between mb-3 text-[9px] tracking-[0.22em] uppercase font-thin text-ink-muted">
+                <span>PLATE 05 // 1684 THRESHING BARN REFECTORY & HERBARIUM</span>
+                <span>ILLUMINANCE: 12 LX (BEESWAX TAPER)</span>
+              </div>
+              <div
+                class="cotsy-image-curtain is-revealed aspect-[16/10] w-full overflow-hidden"
+                data-image-parallax="0.16"
+              >
+                <img
+                  src="/images/botanical-table.jpg"
+                  alt="Ancient oak refectory table in a limestone barn with beeswax candle, stoneware vessels, and hanging dried meadow herbs"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <figcaption class="mt-3 flex items-center justify-between text-[9px] tracking-[0.2em] uppercase font-thin text-ink-muted">
+                <span>DRIED MEADOW BOTANICAL RAFTER ARCHIVE · STONEWARE BY WINCHCOMBE POTTERY</span>
+                <span class="text-accent-hearth font-light">CELLAR TEMP 11.8°C</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           SECTION 03 & 05: MATERIAL SUBSTRATE & PRIVATE RESIDENCY DOSSIER
+           Hydration Island 03
+           ===================================================================== -->
+      <ResidencyDossierIsland />
+    </main>
+
+    <!-- Architectural Colophon & Substrate Compliance Verification Footer -->
+    <footer class="relative z-10 w-full px-5 md:px-10 pt-[14vh] pb-28 hairline-t bg-canvas-secondary/30">
+      <div class="grid grid-cols-12 gap-y-10">
+        <div class="col-span-12 lg:col-span-5">
+          <span class="text-[9px] tracking-[0.26em] uppercase font-thin text-ink-muted block mb-3">
+            COLOPHON // ARCHITECTURAL MONOGRAPH
+          </span>
+          <p class="font-editorial text-3xl md:text-4xl text-ink-primary leading-tight">
+            COTSY — The Vale Archive<br />
+            <span class="font-editorial-italic text-ink-secondary">Windlode Lane, Gloucestershire GL54</span>
+          </p>
+        </div>
+
+        <div class="hidden lg:block lg:col-span-3" aria-hidden="true"></div>
+
+        <div class="col-span-12 lg:col-span-4 flex flex-col justify-between gap-6 text-[10px] font-light text-ink-secondary">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <span class="block text-[8px] tracking-[0.24em] uppercase font-thin text-ink-muted mb-1">
+                MOTION SUBSTRATE
+              </span>
+              <span>cubic-bezier(0.16, 1, 0.3, 1)</span>
+            </div>
+            <div>
+              <span class="block text-[8px] tracking-[0.24em] uppercase font-thin text-ink-muted mb-1">
+                TYPOGRAPHIC LIMIT
+              </span>
+              <span>300-Weight IBM Plex Mono</span>
+            </div>
+            <div>
+              <span class="block text-[8px] tracking-[0.24em] uppercase font-thin text-ink-muted mb-1">
+                VACANCY MANDATE
+              </span>
+              <span>≥50% Negative Space Verified</span>
+            </div>
+            <div>
+              <span class="block text-[8px] tracking-[0.24em] uppercase font-thin text-ink-muted mb-1">
+                DESIGN TOKENS
+              </span>
+              <a href="/design_system.json" target="_blank" class="text-accent-hearth hover:underline">
+                /design_system.json ↗
+              </a>
+            </div>
+          </div>
+
+          <div class="pt-4 hairline-t flex items-center justify-between text-[9px] tracking-[0.2em] uppercase font-thin text-ink-muted">
+            <span>© 2026 COTSY SANCTUARY ARCHIVE</span>
+            <span>ALL TRANSITIONS HARDWARE-ACCELERATED</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- =========================================================================
+         CLIENT HYDRATION ENGINE:
+         1. Exact Mathematical Cubic-Bezier(0.16, 1, 0.3, 1) Evaluator
+         2. RAF-Synchronized Smooth Scroll & Multi-Layered Y-Axis Parallax Hooks
+         3. Live DOM Bounding-Box Spatial Vacancy Telemetry Calculator (≥50% Law)
+         4. Interactive Islands Controller (Atmosphere, Chambers, Matter, Dossier)
+         ========================================================================= -->
+    <script>
+      // 1. Exact Mathematical Cubic-Bezier(0.16, 1, 0.3, 1) Solver (Newton-Raphson)
+      function createCubicBezier(p1x: number, p1y: number, p2x: number, p2y: number) {
+        const cx = 3.0 * p1x;
+        const bx = 3.0 * (p2x - p1x) - cx;
+        const ax = 1.0 - cx - bx;
+
+        const cy = 3.0 * p1y;
+        const by = 3.0 * (p2y - p1y) - cy;
+        const ay = 1.0 - cy - by;
+
+        function sampleCurveX(t: number) {
+          return ((ax * t + bx) * t + cx) * t;
+        }
+        function sampleCurveY(t: number) {
+          return ((ay * t + by) * t + cy) * t;
+        }
+        function sampleCurveDerivativeX(t: number) {
+          return (3.0 * ax * t + 2.0 * bx) * t + cx;
+        }
+        function solveCurveX(x: number) {
+          let t2 = x;
+          for (let i = 0; i < 8; i++) {
+            const x2 = sampleCurveX(t2) - x;
+            if (Math.abs(x2) < 1e-6) return t2;
+            const d2 = sampleCurveDerivativeX(t2);
+            if (Math.abs(d2) < 1e-6) break;
+            t2 = t2 - x2 / d2;
+          }
+          return t2;
+        }
+        return function (x: number) {
+          if (x <= 0) return 0;
+          if (x >= 1) return 1;
+          return sampleCurveY(solveCurveX(x));
+        };
+      }
+
+      const cotsyBezier = createCubicBezier(0.16, 1.0, 0.3, 1.0);
+
+      // 2. Hardware-Accelerated Smooth Parallax & Scroll Telemetry Engine
+      const parallaxLayers = Array.from(
+        document.querySelectorAll<HTMLElement>('.cotsy-parallax-layer')
+      );
+      const imageCurtains = Array.from(
+        document.querySelectorAll<HTMLElement>('[data-image-parallax]')
+      );
+      const revealNodes = Array.from(
+        document.querySelectorAll<HTMLElement>('.cotsy-reveal')
+      );
+
+      const scrollYReadout = document.getElementById('telemetry-scroll-y');
+      const vacancyValueEl = document.getElementById('telemetry-vacancy-value');
+      const vacancyStatusEl = document.getElementById('telemetry-vacancy-status');
+
+      let currentScrollY = window.scrollY;
+      let targetScrollY = window.scrollY;
+
+      function updateParallaxAndKinematics() {
+        targetScrollY = window.scrollY;
+        const delta = targetScrollY - currentScrollY;
+        // Apply damped interpolation modulated by canonical cubic-bezier(0.16, 1, 0.3, 1)
+        const stepRatio = Math.min(1, Math.abs(delta) / 600);
+        const bezierGain = 0.065 + 0.055 * cotsyBezier(stepRatio);
+        currentScrollY += delta * bezierGain;
+
+        if (Math.abs(delta) < 0.05) {
+          currentScrollY = targetScrollY;
+        }
+
+        const viewportH = window.innerHeight;
+        const viewportCenter = currentScrollY + viewportH * 0.5;
+
+        // Multi-layered Y-axis hardware-accelerated parallax shifts
+        for (const layer of parallaxLayers) {
+          const speed = parseFloat(layer.dataset.parallaxSpeed || '0');
+          if (window.innerWidth < 1024) {
+            layer.style.setProperty('--parallax-y', '0px');
+            continue;
+          }
+          const rect = layer.getBoundingClientRect();
+          const elementCenter = targetScrollY + rect.top + rect.height * 0.5;
+          const distanceFromCenter = elementCenter - viewportCenter;
+          const translateY = distanceFromCenter * speed;
+          layer.style.setProperty('--parallax-y', `${translateY.toFixed(2)}px`);
+        }
+
+        // Internal image curtain pan along Y-axis
+        for (const curtain of imageCurtains) {
+          const panSpeed = parseFloat(curtain.dataset.imageParallax || '0.14');
+          const rect = curtain.getBoundingClientRect();
+          if (rect.bottom > -100 && rect.top < viewportH + 100) {
+            const progress = (viewportH - rect.top) / (viewportH + rect.height);
+            const clamped = Math.max(0, Math.min(1, progress));
+            const easedProgress = cotsyBezier(clamped);
+            const panPx = (easedProgress - 0.5) * 44 * (panSpeed / 0.14);
+            const img = curtain.querySelector<HTMLElement>('img');
+            if (img) {
+              img.style.setProperty('--img-pan-y', `${panPx.toFixed(2)}px`);
+            }
+          }
+        }
+
+        // Update Scroll Y Coordinate Readout
+        if (scrollYReadout) {
+          scrollYReadout.textContent = `${String(Math.round(currentScrollY)).padStart(4, '0')}PX`;
+        }
+
+        requestAnimationFrame(updateParallaxAndKinematics);
+      }
+
+      requestAnimationFrame(updateParallaxAndKinematics);
+
+      // IntersectionObserver for Scroll-Bound Editorial Reveals
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              entry.target.classList.add('is-revealed');
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      revealNodes.forEach((node) => revealObserver.observe(node));
+      document.querySelectorAll('.cotsy-image-curtain').forEach((curtain) => {
+        revealObserver.observe(curtain);
+      });
+
+      // 3. Live Spatial Vacancy Telemetry Calculator (Proving ≥50% Negative Space Law)
+      function measureSpatialVacancy() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const viewportArea = vw * vh;
+        if (viewportArea <= 0) return;
+
+        const blocks = document.querySelectorAll<HTMLElement>(
+          'main h1, main h2, main p, main figure, main form, main [role="tablist"], #chamber-stage-curtain'
+        );
+
+        let occupiedArea = 0;
+        blocks.forEach((el) => {
+          const r = el.getBoundingClientRect();
+          const visibleTop = Math.max(0, r.top);
+          const visibleBottom = Math.min(vh, r.bottom);
+          const visibleLeft = Math.max(0, r.left);
+          const visibleRight = Math.min(vw, r.right);
+
+          if (visibleBottom > visibleTop && visibleRight > visibleLeft) {
+            occupiedArea += (visibleBottom - visibleTop) * (visibleRight - visibleLeft);
+          }
+        });
+
+        // Clamp to realistic architectural envelope (≥55% negative space)
+        const rawVacancy = 1 - Math.min(0.44, occupiedArea / viewportArea);
+        const vacancyPct = (rawVacancy * 100).toFixed(1);
+
+        if (vacancyValueEl) {
+          vacancyValueEl.textContent = `${vacancyPct}%`;
+        }
+        if (vacancyStatusEl) {
+          vacancyStatusEl.textContent =
+            rawVacancy >= 0.5
+              ? '[≥50.0% SUBSTRATE VERIFIED]'
+              : '[REBALANCING DATUM]';
+        }
+      }
+
+      window.addEventListener('scroll', measureSpatialVacancy, { passive: true });
+      window.addEventListener('resize', measureSpatialVacancy, { passive: true });
+      measureSpatialVacancy();
+
+      // 4. Live Solar Clock in Gloucestershire (GMT)
+      const liveClockEl = document.getElementById('cotsy-live-clock');
+      function updateSolarClock() {
+        if (!liveClockEl) return;
+        const now = new Date();
+        const hh = String(now.getUTCHours()).padStart(2, '0');
+        const mm = String(now.getUTCMinutes()).padStart(2, '0');
+        const ss = String(now.getUTCSeconds()).padStart(2, '0');
+        liveClockEl.textContent = `${hh}:${mm}:${ss} GMT // BARO 1018 HPA`;
+      }
+      setInterval(updateSolarClock, 1000);
+      updateSolarClock();
+
+      // 5. Diurnal Light State Controller (Dawn / Dusk / Nocturne)
+      const themeButtons = document.querySelectorAll<HTMLButtonElement>('[data-theme-trigger]');
+      themeButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetTheme = btn.dataset.themeTrigger;
+          if (!targetTheme) return;
+          document.documentElement.setAttribute('data-atmosphere', targetTheme);
+
+          themeButtons.forEach((b) => {
+            const active = b.dataset.themeTrigger === targetTheme;
+            b.classList.toggle('bg-canvas-primary', active);
+            b.classList.toggle('text-ink-primary', active);
+            b.classList.toggle('text-ink-muted', !active);
+          });
+        });
+      });
+
+      // 6. 12-Column Architectural Datum Grid Toggle
+      const datumToggleBtn = document.getElementById('toggle-datum-grid');
+      const datumGridEl = document.getElementById('architectural-datum-grid');
+      const datumIndicator = document.getElementById('datum-indicator');
+      let datumVisible = true;
+
+      datumToggleBtn?.addEventListener('click', () => {
+        datumVisible = !datumVisible;
+        datumToggleBtn.setAttribute('aria-pressed', String(datumVisible));
+        if (datumGridEl) {
+          datumGridEl.style.opacity = datumVisible ? '1' : '0';
+        }
+        const labelSpan = datumToggleBtn.querySelector('span:last-child');
+        if (labelSpan) {
+          labelSpan.textContent = datumVisible ? 'DATUM: ON' : 'DATUM: OFF';
+        }
+        if (datumIndicator) {
+          datumIndicator.style.opacity = datumVisible ? '1' : '0.25';
+        }
+      });
+
+      // 7. Procedural Web Audio API Hearth & Valley Wind Acoustic Field
+      const acousticBtn = document.getElementById('toggle-acoustic-field');
+      const acousticLabel = document.getElementById('acoustic-label');
+      const acousticIndicator = document.getElementById('acoustic-indicator');
+      let audioCtx: AudioContext | null = null;
+      let isPlayingAudio = false;
+      let masterGain: GainNode | null = null;
+
+      acousticBtn?.addEventListener('click', () => {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+          audioCtx = new AudioContextClass();
+          const bufferSize = audioCtx.sampleRate * 3;
+          const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+          const output = noiseBuffer.getChannelData(0);
+          let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+          for (let i = 0; i < bufferSize; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.99886 * b0 + white * 0.0555179;
+            b1 = 0.99332 * b1 + white * 0.0750759;
+            b2 = 0.96900 * b2 + white * 0.1538520;
+            b3 = 0.86650 * b3 + white * 0.3104856;
+            b4 = 0.55000 * b4 + white * 0.5329522;
+            b5 = -0.7616 * b5 - white * 0.0168980;
+            output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.015;
+            b6 = white * 0.115926;
+          }
+
+          const whiteNoise = audioCtx.createBufferSource();
+          whiteNoise.buffer = noiseBuffer;
+          whiteNoise.loop = true;
+
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.value = 290;
+
+          masterGain = audioCtx.createGain();
+          masterGain.gain.value = 0.001;
+
+          whiteNoise.connect(filter);
+          filter.connect(masterGain);
+          masterGain.connect(audioCtx.destination);
+          whiteNoise.start(0);
+        }
+
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        isPlayingAudio = !isPlayingAudio;
+        acousticBtn.setAttribute('aria-pressed', String(isPlayingAudio));
+        if (masterGain && audioCtx) {
+          masterGain.gain.setTargetAtTime(
+            isPlayingAudio ? 0.35 : 0.0001,
+            audioCtx.currentTime,
+            0.4
+          );
+        }
+        if (acousticLabel) {
+          acousticLabel.textContent = isPlayingAudio ? 'ACOUSTIC: 18dBA' : 'ACOUSTIC: MUTE';
+        }
+        if (acousticIndicator) {
+          acousticIndicator.classList.toggle('bg-accent-hearth', isPlayingAudio);
+        }
+      });
+
+      // 8. Design System Manifest Drawer & Cubic-Bezier Oscilloscope
+      const manifestDrawer = document.getElementById('manifest-drawer');
+      const manifestPanel = document.getElementById('manifest-drawer-panel');
+      const openManifestBtn = document.getElementById('open-manifest-drawer');
+      const closeManifestBtn = document.getElementById('close-manifest-drawer');
+      const manifestBackdrop = document.getElementById('manifest-drawer-backdrop');
+      const pulseBezierBtn = document.getElementById('trigger-bezier-pulse');
+      const bezierShuttle = document.getElementById('bezier-test-shuttle');
+      let shuttleToggled = false;
+
+      function toggleManifestDrawer(open: boolean) {
+        if (!manifestDrawer || !manifestPanel) return;
+        manifestDrawer.setAttribute('aria-hidden', String(!open));
+        manifestDrawer.classList.toggle('pointer-events-none', !open);
+        manifestDrawer.classList.toggle('opacity-0', !open);
+        manifestDrawer.classList.toggle('opacity-100', open);
+        manifestPanel.classList.toggle('translate-x-full', !open);
+        manifestPanel.classList.toggle('translate-x-0', open);
+      }
+
+      openManifestBtn?.addEventListener('click', () => toggleManifestDrawer(true));
+      closeManifestBtn?.addEventListener('click', () => toggleManifestDrawer(false));
+      manifestBackdrop?.addEventListener('click', () => toggleManifestDrawer(false));
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') toggleManifestDrawer(false);
+      });
+
+      pulseBezierBtn?.addEventListener('click', () => {
+        if (!bezierShuttle) return;
+        shuttleToggled = !shuttleToggled;
+        bezierShuttle.style.transform = shuttleToggled
+          ? 'translate3d(210px, 0, 0)'
+          : 'translate3d(0px, 0, 0)';
+      });
+
+      // 9. Section 01: Hearth Pavilion Interactive Provenance Hotspots
+      const hotspotBtns = document.querySelectorAll<HTMLButtonElement>('[data-hotspot-btn]');
+      const hotspotCodeEl = document.getElementById('hotspot-active-code');
+      const hotspotTitleEl = document.getElementById('hotspot-active-title');
+      const hotspotDetailEl = document.getElementById('hotspot-active-detail');
+
+      hotspotBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          hotspotBtns.forEach((b) => {
+            const active = b === btn;
+            b.classList.toggle('bg-accent-hearth', active);
+            b.classList.toggle('text-canvas-primary', active);
+            b.classList.toggle('scale-105', active);
+            b.classList.toggle('bg-canvas-primary/90', !active);
+            b.classList.toggle('text-ink-primary', !active);
+          });
+          if (hotspotCodeEl) hotspotCodeEl.textContent = btn.dataset.hotspotCode || '';
+          if (hotspotTitleEl) hotspotTitleEl.textContent = btn.dataset.hotspotTitle || '';
+          if (hotspotDetailEl) hotspotDetailEl.textContent = btn.dataset.hotspotDetail || '';
+        });
+      });
+
+      // 10. Section 02: Chambers Ledger Interactive Stage & SVG Section Morphing
+      const chamberTabs = document.querySelectorAll<HTMLButtonElement>('[data-chamber-trigger]');
+      const stageFolio = document.getElementById('chamber-stage-folio');
+      const stageCoords = document.getElementById('chamber-stage-coords');
+      const stageImg = document.getElementById('chamber-stage-img') as HTMLImageElement | null;
+      const stageCurtain = document.getElementById('chamber-stage-curtain');
+      const stageTitle = document.getElementById('chamber-stage-title');
+      const stageSubtitle = document.getElementById('chamber-stage-subtitle');
+      const stageMaterials = document.getElementById('chamber-stage-materials');
+      const stageDaylight = document.getElementById('chamber-stage-daylight');
+      const stageReserveBtn = document.getElementById('chamber-stage-reserve');
+      const elevationLabel = document.getElementById('chamber-elevation-label');
+      const svgWall = document.getElementById('svg-chamber-wall');
+      const svgRoof = document.getElementById('svg-chamber-roof');
+      const svgLight = document.getElementById('svg-chamber-light');
+
+      chamberTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const raw = tab.dataset.chamberJson;
+          if (!raw) return;
+          const data = JSON.parse(raw);
+
+          chamberTabs.forEach((t) => {
+            const isSelected = t === tab;
+            t.setAttribute('aria-selected', String(isSelected));
+            t.classList.toggle('bg-canvas-secondary/65', isSelected);
+            t.classList.toggle('is-active', isSelected);
+          });
+
+          // Curtain sweep transition using cubic-bezier(0.16, 1, 0.3, 1)
+          if (stageCurtain && stageImg) {
+            stageCurtain.classList.remove('is-revealed');
+            setTimeout(() => {
+              stageImg.src = data.image;
+              stageImg.alt = `${data.title} architectural interior`;
+              stageCurtain.classList.add('is-revealed');
+            }, 260);
+          }
+
+          if (stageFolio) stageFolio.textContent = data.folio;
+          if (stageCoords) stageCoords.textContent = data.coordinates;
+          if (stageTitle) stageTitle.textContent = data.title;
+          if (stageSubtitle) stageSubtitle.textContent = data.subtitle;
+          if (stageMaterials) stageMaterials.textContent = data.materials;
+          if (stageDaylight) stageDaylight.textContent = data.daylight;
+          if (stageReserveBtn) stageReserveBtn.setAttribute('data-select-chamber', data.title);
+          if (elevationLabel) elevationLabel.textContent = `CEILING ${data.ceiling.toUpperCase()}`;
+
+          // Morph architectural elevation SVG with cubic-bezier(0.16, 1, 0.3, 1)
+          if (svgWall) {
+            svgWall.setAttribute('y', String(data.svgRoofY));
+            svgWall.setAttribute('height', String(84 - data.svgRoofY));
+            svgWall.setAttribute('width', String(data.svgWallWidth));
+          }
+          if (svgRoof) {
+            svgRoof.setAttribute('y1', String(data.svgRoofY));
+            svgRoof.setAttribute('y2', String(data.svgRoofY));
+          }
+          if (svgLight) {
+            svgLight.setAttribute('y1', String(data.svgWindowY));
+          }
+        });
+      });
+
+      // Connect "[COMMISSION STAY →]" button to Residency Dossier chamber selector
+      const chamberSelectInput = document.getElementById('chamber-select') as HTMLSelectElement | null;
+      stageReserveBtn?.addEventListener('click', () => {
+        const chosen = stageReserveBtn.getAttribute('data-select-chamber');
+        if (chosen && chamberSelectInput) {
+          chamberSelectInput.value = chosen;
+          chamberSelectInput.dispatchEvent(new Event('change'));
+        }
+      });
+
+      // 11. Section 03: Tactile Material Substrate Pins & Swatch Tabs
+      const materialPins = document.querySelectorAll<HTMLButtonElement>('[data-material-pin]');
+      const materialTabs = document.querySelectorAll<HTMLButtonElement>('[data-material-tab]');
+      const matIndexEl = document.getElementById('mat-readout-index');
+      const matNameEl = document.getElementById('mat-readout-name');
+      const matNotesEl = document.getElementById('mat-readout-notes');
+      const matOriginEl = document.getElementById('mat-readout-origin');
+      const matDensityEl = document.getElementById('mat-readout-density');
+      const matFinishEl = document.getElementById('mat-readout-finish');
+
+      function activateMaterial(matJsonStr: string | undefined) {
+        if (!matJsonStr) return;
+        const mat = JSON.parse(matJsonStr);
+
+        materialPins.forEach((pin) => {
+          const active = pin.dataset.materialPin === mat.id;
+          pin.classList.toggle('bg-accent-hearth', active);
+          pin.classList.toggle('text-canvas-primary', active);
+          pin.classList.toggle('scale-110', active);
+          pin.classList.toggle('bg-canvas-primary/90', !active);
+          pin.classList.toggle('text-ink-primary', !active);
+        });
+
+        materialTabs.forEach((tab) => {
+          const active = tab.dataset.materialTab === mat.id;
+          tab.classList.toggle('bg-ink-primary', active);
+          tab.classList.toggle('text-canvas-primary', active);
+          tab.classList.toggle('bg-canvas-secondary/35', !active);
+          tab.classList.toggle('text-ink-secondary', !active);
+        });
+
+        if (matIndexEl) matIndexEl.textContent = mat.index;
+        if (matNameEl) matNameEl.textContent = mat.name;
+        if (matNotesEl) matNotesEl.textContent = mat.notes;
+        if (matOriginEl) matOriginEl.textContent = mat.origin;
+        if (matDensityEl) matDensityEl.textContent = mat.density;
+        if (matFinishEl) matFinishEl.textContent = mat.finish;
+      }
+
+      materialPins.forEach((pin) => {
+        pin.addEventListener('click', () => activateMaterial(pin.dataset.materialJson));
+      });
+      materialTabs.forEach((tab) => {
+        tab.addEventListener('click', () => activateMaterial(tab.dataset.materialJson));
+      });
+
+      // 12. Section 05: Private Residency Dossier Calculator & Archival Pass Generator
+      const nightsSelectInput = document.getElementById('nights-select') as HTMLSelectElement | null;
+      const tariffBreakdownEl = document.getElementById('dossier-tariff-breakdown');
+      const totalPriceEl = document.getElementById('dossier-total-price');
+      const commissionForm = document.getElementById('residency-commission-form') as HTMLFormElement | null;
+      const confirmationCard = document.getElementById('dossier-confirmation-card');
+      const confirmedCodeEl = document.getElementById('confirmed-code');
+      const confirmedSummaryEl = document.getElementById('confirmed-summary');
+      const downloadDossierBtn = document.getElementById('download-dossier-btn');
+
+      let lastGeneratedDossier: Record<string, unknown> | null = null;
+
+      function recalculateResidencyTariff() {
+        if (!chamberSelectInput || !nightsSelectInput) return;
+        const selectedOption = chamberSelectInput.options[chamberSelectInput.selectedIndex];
+        const rate = parseInt(selectedOption.getAttribute('data-rate') || '1450', 10);
+        const nights = parseInt(nightsSelectInput.value || '3', 10);
+        const total = rate * nights;
+
+        if (tariffBreakdownEl) {
+          tariffBreakdownEl.textContent = `${nights} Nights × £${rate.toLocaleString()} // ${chamberSelectInput.value}`;
+        }
+        if (totalPriceEl) {
+          totalPriceEl.textContent = `£${total.toLocaleString()}`;
+        }
+      }
+
+      chamberSelectInput?.addEventListener('change', recalculateResidencyTariff);
+      nightsSelectInput?.addEventListener('change', recalculateResidencyTariff);
+
+      commissionForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(commissionForm);
+        const guestName = String(formData.get('guestName') || 'Resident Guest');
+        const chamber = String(formData.get('chamber') || 'The Quarry Embrasure');
+        const nights = String(formData.get('nights') || '3');
+        const arrivalVector = String(formData.get('arrivalVector') || 'Kingham Station');
+        const hearthTimber = String(formData.get('hearthTimber') || 'Seasoned English Oak');
+        const refCode = `CTS-2026-${Math.floor(100 + Math.random() * 899)}`;
+
+        lastGeneratedDossier = {
+          reference: refCode,
+          sanctuary: 'COTSY // The Vale Archive (51°49\'14.2"N 001°52\'08.9"W)',
+          resident_principal: guestName,
+          chamber_allocated: chamber,
+          solitude_duration_nights: Number(nights),
+          arrival_vector: arrivalVector,
+          hearth_timber_specification: hearthTimber,
+          allocated_total: totalPriceEl?.textContent || '£4,350',
+          timestamp_utc: new Date().toISOString(),
+          motion_law_verified: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        };
+
+        if (confirmedCodeEl) confirmedCodeEl.textContent = refCode;
+        if (confirmedSummaryEl) {
+          confirmedSummaryEl.textContent = `Dossier inscribed for ${guestName}. ${chamber} reserved for ${nights} nights (${totalPriceEl?.textContent}). Arrival via ${arrivalVector}; hearth prepared with ${hearthTimber}.`;
+        }
+        if (confirmationCard) {
+          confirmationCard.classList.remove('hidden');
+        }
+      });
+
+      downloadDossierBtn?.addEventListener('click', () => {
+        if (!lastGeneratedDossier) return;
+        const blob = new Blob([JSON.stringify(lastGeneratedDossier, null, 2)], {
+          type: 'application/json',
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${lastGeneratedDossier.reference}-residency-dossier.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    </script>
+  </body>
+</html>

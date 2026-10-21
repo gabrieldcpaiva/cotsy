@@ -1,0 +1,225 @@
+@import '@fontsource/cormorant-garamond/300.css';
+@import '@fontsource/cormorant-garamond/300-italic.css';
+@import '@fontsource/cormorant-garamond/400.css';
+@import '@fontsource/cormorant-garamond/400-italic.css';
+@import '@fontsource/ibm-plex-mono/200.css';
+@import '@fontsource/ibm-plex-mono/300.css';
+@import '@fontsource/ibm-plex-mono/300-italic.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+[data-atmosphere="limestone_daylight"] {
+  --canvas-primary: #F3EFE6;
+  --canvas-secondary: #EAE4D7;
+  --canvas-elevated: #F8F5EE;
+  --ink-primary: #181613;
+  --ink-secondary: #544F46;
+  --ink-muted: #7E786C;
+  --accent-hearth: #9E5A3C;
+  --accent-beeswax: #B89364;
+  --accent-lichen: #5E6454;
+  --hairline-rule: rgba(24, 22, 19, 0.10);
+  --grain-opacity: 0.038;
+  --canonical-curve: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-atmosphere="meadow_dusk"] {
+  --canvas-primary: #E5E0D5;
+  --canvas-secondary: #DAD3C5;
+  --canvas-elevated: #ECE8DF;
+  --ink-primary: #161512;
+  --ink-secondary: #4B473F;
+  --ink-muted: #706B60;
+  --accent-hearth: #8F4E32;
+  --accent-beeswax: #A68254;
+  --accent-lichen: #4F5646;
+  --hairline-rule: rgba(22, 21, 18, 0.12);
+  --grain-opacity: 0.044;
+}
+
+[data-atmosphere="bogoak_nocturne"] {
+  --canvas-primary: #12110E;
+  --canvas-secondary: #1A1814;
+  --canvas-elevated: #211E19;
+  --ink-primary: #EFECE4;
+  --ink-secondary: #A8A195;
+  --ink-muted: #6E685E;
+  --accent-hearth: #C8734E;
+  --accent-beeswax: #D4B284;
+  --accent-lichen: #858D78;
+  --hairline-rule: rgba(239, 236, 228, 0.11);
+  --grain-opacity: 0.055;
+}
+
+/* Strict Typographic & Motion Substrate Enforcement */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html {
+  background-color: var(--canvas-primary);
+  color: var(--ink-primary);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 300;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  transition:
+    background-color 1450ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 1450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--canvas-primary);
+  color: var(--ink-primary);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 300;
+  line-height: 1.9;
+  letter-spacing: 0.015em;
+  overflow-x: hidden;
+  transition:
+    background-color 1450ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 1450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Enforce maximum 300 weight on all body & utility monospace elements */
+p,
+span,
+li,
+label,
+input,
+select,
+textarea,
+button,
+dd,
+dt,
+td,
+th,
+code,
+pre,
+small {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 300;
+}
+
+.font-editorial {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+}
+
+.font-editorial-italic {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.font-utility {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 300;
+}
+
+.font-datum {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 200;
+}
+
+/* Hardware-Accelerated Scroll & Parallax Layers */
+.cotsy-parallax-layer {
+  will-change: transform;
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+  backface-visibility: hidden;
+}
+
+.cotsy-image-curtain {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--canvas-secondary);
+}
+
+.cotsy-image-curtain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--canvas-primary);
+  transform-origin: top center;
+  transform: scale3d(1, var(--curtain-scale, 1), 1);
+  transition: transform 1450ms cubic-bezier(0.16, 1, 0.3, 1), background-color 1450ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cotsy-image-curtain.is-revealed::after {
+  --curtain-scale: 0;
+}
+
+.cotsy-image-curtain img {
+  will-change: transform;
+  transform: translate3d(0, var(--img-pan-y, 0px), 0) scale3d(var(--img-scale, 1.12), var(--img-scale, 1.12), 1);
+  transition: transform 1600ms cubic-bezier(0.16, 1, 0.3, 1), filter 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cotsy-image-curtain.is-revealed img {
+  --img-scale: 1.05;
+}
+
+.cotsy-image-curtain:hover img {
+  --img-scale: 1.08;
+}
+
+/* Scroll-bound Editorial Reveal */
+.cotsy-reveal {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+  transition:
+    opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.cotsy-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Architectural Hairlines */
+.hairline-t {
+  border-top: 1px solid var(--hairline-rule);
+}
+.hairline-b {
+  border-bottom: 1px solid var(--hairline-rule);
+}
+.hairline-l {
+  border-left: 1px solid var(--hairline-rule);
+}
+.hairline-r {
+  border-right: 1px solid var(--hairline-rule);
+}
+.hairline-box {
+  border: 1px solid var(--hairline-rule);
+}
+
+/* Custom Selection & Scrollbar */
+::selection {
+  background-color: var(--accent-hearth);
+  color: #F8F5EE;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--canvas-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ink-muted);
+}
