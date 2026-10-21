@@ -1,0 +1,376 @@
+---
+const materials = [
+  {
+    id: 'oolitic-limestone',
+    index: 'SPECIMEN 01',
+    name: 'Middle Jurassic Oolitic Limestone',
+    origin: 'Guiting Power Quarry · 1.4 km NNE of Sanctuary',
+    density: '2,180 kg/m³ · Thermal Conductivity 1.42 W/m·K',
+    finish: 'Hand-pitched ashlar & slaked lime-putty Breathable Mortar',
+    notes: 'Quarried from the Inferior Oolite stratum formed 170 million years ago. Absorbs low-frequency acoustic resonance while radiating stored solar warmth well into the night.',
+    markerX: '20%',
+    markerY: '38%',
+  },
+  {
+    id: 'charred-bogoak',
+    index: 'SPECIMEN 02',
+    name: 'Sub-Fossil Charred Fenland Bog-Oak',
+    origin: 'Somerset Levels & Estate Windfall · Aged 3,200 Years',
+    density: '890 kg/m³ · Surface Carbonization 4.2 mm',
+    finish: 'Yakisugi flame-charred & raw cold-pressed linseed oil',
+    notes: 'Preserved in anaerobic peat bogs since the Bronze Age, then surface-charred over estate oak embers to create a deeply fissured, rot-impervious architectural skin.',
+    markerX: '48%',
+    markerY: '33%',
+  },
+  {
+    id: 'kortrijk-flax',
+    index: 'SPECIMEN 03',
+    name: 'Unbleached Dew-Retted Belgian Flax',
+    origin: 'Lys River Valley, Kortrijk · Loom-State 480 gsm',
+    density: '18 Warp / 16 Weft per cm · Zero Optical Brighteners',
+    finish: 'Washed in soft Gloucestershire rainwater & air-dried in meadow wind',
+    notes: 'Woven exclusively in heavy architectural weights for bed drapery, upholstered daybeds, and acoustic wall panels.',
+    markerX: '48%',
+    markerY: '72%',
+  },
+  {
+    id: 'cast-bronze',
+    index: 'SPECIMEN 04',
+    name: 'Sand-Cast Silicon Bronze (Key 314)',
+    origin: 'Stroud Foundry · Hand-Stamped Monospace Numerals',
+    density: '8,540 kg/m³ · CuSi3Mn1 Alloy',
+    finish: 'Liver-of-sulphur oxidation & unlacquered living patina',
+    notes: 'Every door latch, bath spout, and chamber key fob is sand-cast in small batches and left unlacquered to record the trace of each resident’s hand.',
+    markerX: '78%',
+    markerY: '56%',
+  },
+];
+---
+
+<!-- SECTION 03: MATERIAL SUBSTRATE ARCHIVE -->
+<section
+  id="material-substrate"
+  class="relative w-full px-5 md:px-10 py-[22vh] hairline-t"
+  data-vacancy-section="material-substrate"
+>
+  <div class="grid grid-cols-12 gap-y-16 items-start">
+    <!-- Col 1-6: Interactive Macro Material Plate -->
+    <div
+      class="col-span-12 lg:col-span-6 cotsy-parallax-layer"
+      data-parallax-speed="-0.12"
+    >
+      <div class="mb-4 flex items-center justify-between text-[9px] tracking-[0.24em] uppercase font-thin text-ink-muted">
+        <span>[03 // TACTILE MATERIAL SUBSTRATE]</span>
+        <span>SCALE 1:1 MACRO ARCHIVE</span>
+      </div>
+
+      <div class="relative hairline-box p-3 bg-canvas-elevated/60">
+        <div class="cotsy-image-curtain is-revealed relative aspect-[16/10] w-full overflow-hidden">
+          <img
+            src="/images/material-triptych.jpg"
+            alt="Macro study of oolitic limestone, charred bog-oak, raw flax linen, and bronze room key 314"
+            class="w-full h-full object-cover"
+          />
+
+          <!-- Interactive Coordinate Pins on the Macro Plate -->
+          {materials.map((mat, i) => (
+            <button
+              type="button"
+              data-material-pin={mat.id}
+              data-material-json={JSON.stringify(mat)}
+              style={`left: ${mat.markerX}; top: ${mat.markerY};`}
+              class:list={[
+                'material-pin absolute -translate-x-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-light tracking-widest transition-all duration-900 ease-cotsy',
+                i === 0
+                  ? 'bg-accent-hearth text-canvas-primary scale-110 shadow-lg'
+                  : 'bg-canvas-primary/90 text-ink-primary hairline-box hover:scale-110',
+              ]}
+              aria-label={`Inspect ${mat.name}`}
+            >
+              0{i + 1}
+            </button>
+          ))}
+        </div>
+
+        <div class="mt-3 flex items-center justify-between text-[9px] tracking-[0.2em] uppercase font-thin text-ink-muted">
+          <span>PLATE 04 // TRAVERTINE DRAFTING TABLE SPECIMENS</span>
+          <span>SELECT PIN [01–04] TO INSPECT</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Col 7-8: Mandatory Uninhabited Negative Space Bay -->
+    <div class="hidden lg:block lg:col-span-2" aria-hidden="true"></div>
+
+    <!-- Col 9-12: Asymmetric Material Telemetry & Swatch Selector -->
+    <div
+      class="col-span-12 lg:col-span-4 lg:mt-[10vh] cotsy-parallax-layer"
+      data-parallax-speed="0.08"
+    >
+      <span class="text-[9px] tracking-[0.26em] uppercase font-thin text-accent-hearth block mb-3">
+        HONEST MATTER // ZERO SYNTHETICS
+      </span>
+      <h2
+        class="font-editorial text-ink-primary mb-8"
+        style="font-size: clamp(2.1rem, 4vw, 4rem); line-height: 0.96; letter-spacing: -0.025em;"
+      >
+        Surfaces that age<br />
+        <span class="font-editorial-italic text-ink-secondary">with quiet dignity.</span>
+      </h2>
+
+      <!-- Swatch Tabs -->
+      <div class="grid grid-cols-2 gap-2 mb-8">
+        {materials.map((mat, i) => (
+          <button
+            type="button"
+            data-material-tab={mat.id}
+            data-material-json={JSON.stringify(mat)}
+            class:list={[
+              'material-tab text-left p-3 hairline-box transition-all duration-700 ease-cotsy',
+              i === 0 ? 'bg-ink-primary text-canvas-primary' : 'bg-canvas-secondary/35 text-ink-secondary hover:text-ink-primary',
+            ]}
+          >
+            <span class="block text-[8px] tracking-[0.24em] uppercase opacity-75">
+              {mat.index}
+            </span>
+            <span class="block text-[10px] tracking-[0.12em] uppercase font-light mt-1 truncate">
+              {mat.name.split(' ').slice(-2).join(' ')}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <!-- Active Specimen Readout Card -->
+      <div class="p-6 hairline-box bg-canvas-secondary/35 flex flex-col gap-4">
+        <div class="flex items-center justify-between hairline-b pb-3">
+          <span id="mat-readout-index" class="text-[9px] tracking-[0.24em] uppercase font-thin text-accent-hearth">
+            SPECIMEN 01
+          </span>
+          <span class="text-[9px] tracking-[0.2em] uppercase font-thin text-ink-muted">
+            VERIFIED ARCHIVE
+          </span>
+        </div>
+
+        <h3 id="mat-readout-name" class="font-editorial text-2xl text-ink-primary">
+          Middle Jurassic Oolitic Limestone
+        </h3>
+
+        <p id="mat-readout-notes" class="text-[12px] font-light text-ink-secondary leading-[1.9]">
+          Quarried from the Inferior Oolite stratum formed 170 million years ago. Absorbs low-frequency acoustic resonance while radiating stored solar warmth well into the night.
+        </p>
+
+        <dl class="pt-4 hairline-t flex flex-col gap-2.5 text-[10px] font-light">
+          <div class="flex flex-col">
+            <dt class="text-[8px] tracking-[0.24em] uppercase font-thin text-ink-muted">PROVENANCE COORDINATE</dt>
+            <dd id="mat-readout-origin" class="text-ink-primary mt-0.5">Guiting Power Quarry · 1.4 km NNE of Sanctuary</dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="text-[8px] tracking-[0.24em] uppercase font-thin text-ink-muted">PHYSICAL TELEMETRY</dt>
+            <dd id="mat-readout-density" class="text-ink-primary mt-0.5">2,180 kg/m³ · Thermal Conductivity 1.42 W/m·K</dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="text-[8px] tracking-[0.24em] uppercase font-thin text-ink-muted">ARCHITECTURAL DRESSING</dt>
+            <dd id="mat-readout-finish" class="text-ink-primary mt-0.5">Hand-pitched ashlar & slaked lime-putty Breathable Mortar</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 05: PRIVATE RESIDENCY DOSSIER (Commissioning Island) -->
+<section
+  id="residency-dossier"
+  class="relative w-full px-5 md:px-10 py-[22vh] hairline-t"
+  data-vacancy-section="residency-dossier"
+>
+  <div class="grid grid-cols-12 gap-y-14 items-start">
+    <!-- Col 1-4: Editorial Invitation & Telemetry -->
+    <div class="col-span-12 lg:col-span-4 cotsy-reveal">
+      <span class="text-[9px] tracking-[0.26em] uppercase font-thin text-ink-muted block mb-4">
+        [05 // PRIVATE RESIDENCY COMMISSION]
+      </span>
+      <h2
+        class="font-editorial text-ink-primary mb-6"
+        style="font-size: clamp(2.5rem, 5vw, 5.2rem); line-height: 0.92; letter-spacing: -0.03em;"
+      >
+        Enter the<br />
+        <span class="font-editorial-italic text-ink-secondary">quiet ledger.</span>
+      </h2>
+      <p class="text-[12px] font-light text-ink-secondary leading-[1.95] max-w-[38ch] mb-8">
+        Residencies at Cotsy are arranged by private dossier for a minimum of three nights. No front desk exists; upon arrival through the limestone cloister, your hearth is already lit.
+      </p>
+
+      <div class="p-5 hairline-box bg-canvas-secondary/30 flex flex-col gap-3">
+        <span class="text-[9px] tracking-[0.24em] uppercase font-thin text-accent-hearth">
+          AUTUMN / WINTER 2026 ALLOCATION
+        </span>
+        <div class="flex items-center justify-between text-[11px] font-light text-ink-secondary">
+          <span>OCTOBER – NOVEMBER</span>
+          <span class="text-ink-primary">2 CHAMBERS OPEN</span>
+        </div>
+        <div class="flex items-center justify-between text-[11px] font-light text-ink-secondary">
+          <span>SOLSTICE RESIDENCY</span>
+          <span class="text-ink-primary">1 CHAMBER OPEN</span>
+        </div>
+        <div class="flex items-center justify-between text-[11px] font-light text-ink-secondary">
+          <span>WHOLE SANCTUARY (7 CH.)</span>
+          <span class="text-ink-primary">BY ARCHIVAL REQUEST</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Col 5-7: Mandatory Uninhabited Negative Space Void (3 columns wide) -->
+    <div class="hidden lg:block lg:col-span-3" aria-hidden="true"></div>
+
+    <!-- Col 8-12: Minimalist Architectural Commissioning Form -->
+    <div class="col-span-12 lg:col-span-5 cotsy-reveal">
+      <form
+        id="residency-commission-form"
+        class="p-6 md:p-10 hairline-box bg-canvas-elevated/75 flex flex-col gap-7"
+      >
+        <div class="flex items-center justify-between hairline-b pb-4">
+          <span class="text-[9px] tracking-[0.24em] uppercase font-light text-ink-primary">
+            DOSSIER TRANSMISSION // ENCRYPTED LEDGER
+          </span>
+          <span id="dossier-ref-preview" class="text-[9px] tracking-[0.22em] uppercase font-thin text-accent-hearth">
+            REF: CTS-2026-841
+          </span>
+        </div>
+
+        <!-- Guest Identifier -->
+        <div class="flex flex-col gap-2">
+          <label for="guest-name" class="text-[9px] tracking-[0.24em] uppercase font-thin text-ink-muted">
+            01 // RESIDENT PRINCIPAL NAME OR MONOGRAM
+          </label>
+          <input
+            id="guest-name"
+            name="guestName"
+            type="text"
+            required
+            placeholder="e.g. Clara Vandenberg"
+            class="w-full bg-transparent hairline-b py-2.5 text-[13px] font-light text-ink-primary placeholder:text-ink-muted/50 focus:outline-none focus:border-accent-hearth transition-colors duration-450 ease-cotsy"
+          />
+        </div>
+
+        <!-- Chamber Selection & Duration Row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex flex-col gap-2">
+            <label for="chamber-select" class="text-[9px] tracking-[0.24em] uppercase font-thin text-ink-muted">
+              02 // ARCHITECTURAL CHAMBER
+            </label>
+            <select
+              id="chamber-select"
+              name="chamber"
+              class="w-full bg-canvas-primary hairline-box px-3 py-2.5 text-[11px] font-light text-ink-primary focus:outline-none focus:border-accent-hearth transition-colors duration-450 ease-cotsy"
+            >
+              <option value="The Quarry Embrasure" data-rate="1450">CH.01 — The Quarry Embrasure (£1,450)</option>
+              <option value="The Hearth Pavilion" data-rate="1920">CH.02 — The Hearth Pavilion (£1,920)</option>
+              <option value="The Basalt Bathhouse Suite" data-rate="2380">CH.03 — The Basalt Bathhouse Suite (£2,380)</option>
+              <option value="The Cloister Botanical Loft" data-rate="1680">CH.04 — The Cloister Botanical Loft (£1,680)</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="nights-select" class="text-[9px] tracking-[0.24em] uppercase font-thin text-ink-muted">
+              03 // SOLITUDE DURATION
+            </label>
+            <select
+              id="nights-select"
+              name="nights"
+              class="w-full bg-canvas-primary hairline-box px-3 py-2.5 text-[11px] font-light text-ink-primary focus:outline-none focus:border-accent-hearth transition-colors duration-450 ease-cotsy"
+            >
+              <option value="3">03 Nights — Minimum Equinox Stay</option>
+              <option value="5">05 Nights — Sabbatical Cadence</option>
+              <option value="7">07 Nights — Full Monastic Week</option>
+              <option value="14">14 Nights — Fortnight Archive Residency</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Arrival Vector & Hearth Timber -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex flex-col gap-2">
+            <label for="arrival-vector" class="text-[9px] tracking-[0.24em] uppercase font-thin text-ink-muted">
+              04 // ARRIVAL VECTOR
+            </label>
+            <select
+              id="arrival-vector"
+              name="arrivalVector"
+              class="w-full bg-canvas-primary hairline-box px-3 py-2.5 text-[11px] font-light text-ink-primary focus:outline-none focus:border-accent-hearth transition-colors duration-450 ease-cotsy"
+            >
+              <option value="Kingham Station + Electric Defender">Kingham Rail + Estate Electric Defender</option>
+              <option value="Meadow Helipad 51°49'14N">Meadow Helipad (51°49'14.2"N)</option>
+              <option value="Private Autonomous / Chauffeur">Private Approach via Windlode Lane</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="hearth-timber" class="text-[9px] tracking-[0.24em] uppercase font-thin text-ink-muted">
+              05 // HEARTH TIMBER PROVENANCE
+            </label>
+            <select
+              id="hearth-timber"
+              name="hearthTimber"
+              class="w-full bg-canvas-primary hairline-box px-3 py-2.5 text-[11px] font-light text-ink-primary focus:outline-none focus:border-accent-hearth transition-colors duration-450 ease-cotsy"
+            >
+              <option value="Seasoned English Oak (36-Month)">Seasoned English Oak (36-Month Cure)</option>
+              <option value="Wild Orchard Applewood & Birch">Orchard Applewood & Silver Birch</option>
+              <option value="Smokeless Ash & Meadow Herbs">Kiln-Dried Ash & Dried Rosemary</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Live Tariff Telemetry Summary -->
+        <div class="p-4 hairline-box bg-canvas-secondary/40 flex items-center justify-between">
+          <div>
+            <span class="block text-[8px] tracking-[0.24em] uppercase font-thin text-ink-muted">
+              ESTIMATED RESIDENCY ALLOCATION (INCL. REFECTORY & THERMAL)
+            </span>
+            <span id="dossier-tariff-breakdown" class="text-[11px] font-light text-ink-secondary">
+              3 Nights × £1,450 // The Quarry Embrasure
+            </span>
+          </div>
+          <span id="dossier-total-price" class="font-editorial text-2xl md:text-3xl text-ink-primary">
+            £4,350
+          </span>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-4 hairline-box bg-ink-primary text-canvas-primary text-[10px] tracking-[0.26em] uppercase font-light hover:bg-accent-hearth transition-colors duration-700 ease-cotsy"
+        >
+          [INSCRIBE RESIDENCY DOSSIER →]
+        </button>
+      </form>
+
+      <!-- Stamped Confirmation Output (Revealed on Submit with cubic-bezier(0.16, 1, 0.3, 1)) -->
+      <div
+        id="dossier-confirmation-card"
+        class="hidden mt-6 p-6 hairline-box bg-canvas-secondary/70 transition-all duration-1100 ease-cotsy"
+      >
+        <div class="flex items-center justify-between pb-3 hairline-b">
+          <span class="text-[9px] tracking-[0.24em] uppercase font-light text-accent-hearth">
+            ● DOSSIER INSCRIBED IN VALE ARCHIVE
+          </span>
+          <span id="confirmed-code" class="text-[9px] tracking-[0.22em] uppercase font-thin text-ink-primary">
+            CTS-2026-841
+          </span>
+        </div>
+        <p id="confirmed-summary" class="mt-4 text-[12px] font-light text-ink-secondary leading-[1.9]"></p>
+        <div class="mt-4 pt-3 hairline-t flex items-center justify-between">
+          <span class="text-[9px] tracking-[0.2em] uppercase font-thin text-ink-muted">
+            ESTATE CUSTODIAN RESPONSE WITHIN 2 SOLAR HOURS
+          </span>
+          <button
+            type="button"
+            id="download-dossier-btn"
+            class="text-[9px] tracking-[0.22em] uppercase font-light text-accent-hearth hover:underline"
+          >
+            [DOWNLOAD ARCHIVAL PASS .JSON ↓]
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
